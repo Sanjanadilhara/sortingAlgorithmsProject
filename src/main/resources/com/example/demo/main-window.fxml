@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox alignment="CENTER" prefHeight="418.0" prefWidth="634.0" spacing="20.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.demo.HelloController">
+    <padding>
+        <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+    </padding>
+   <Button mnemonicParsing="false" onAction="#handleFileSelection" text="open file" />
+   <FlowPane prefHeight="200.0" prefWidth="200.0" fx:id="colNameContainer" />
+
+    <Label fx:id="welcomeText" />
+   <HBox prefHeight="336.0" prefWidth="594.0">
+      <children>
+         <TableView fx:id="dataTable" prefHeight="100.0" prefWidth="683.0">
+         </TableView>
+      </children>
+   </HBox>
+</VBox>

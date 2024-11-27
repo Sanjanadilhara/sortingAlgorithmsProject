@@ -16,10 +16,13 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Arrays;
 
 public class HelloController {
+    int column;
     ToggleGroup toggleGroup;
+    DataSet data = new DataSet();
     @FXML
     private Label welcomeText;
 
@@ -34,6 +37,51 @@ public class HelloController {
         welcomeText.setText("Welcome to JavaFX Application!");
     }
 
+    @FXML
+    protected void shellSort() {
+//        dataTable.getColumns().clear();
+        dataTable.getItems().clear();
+        ArrayList<DataSet.SingleDataFormat> result = data.shellSort(column);
+
+        for(int i = 0; i < result.size(); i++){
+//            System.out.println(data.data.get(result.get(i).index).value[column]);
+            ObservableList<String> row = FXCollections.observableArrayList(Arrays.asList(data.data.get(result.get(i).index).value));
+            dataTable.getItems().add(row);
+        }
+    } @FXML
+    protected void mergeSort() {
+//        dataTable.getColumns().clear();
+        dataTable.getItems().clear();
+        ArrayList<DataSet.SingleDataFormat> result = data.mergeSort(column);
+
+        for(int i = 0; i < result.size(); i++){
+//            System.out.println(data.data.get(result.get(i).index).value[column]);
+            ObservableList<String> row = FXCollections.observableArrayList(Arrays.asList(data.data.get(result.get(i).index).value));
+            dataTable.getItems().add(row);
+        }
+    } @FXML
+    protected void quickSort() {
+//        dataTable.getColumns().clear();
+        dataTable.getItems().clear();
+        ArrayList<DataSet.SingleDataFormat> result = data.quickSort(column);
+
+        for(int i = 0; i < result.size(); i++){
+//            System.out.println(data.data.get(result.get(i).index).value[column]);
+            ObservableList<String> row = FXCollections.observableArrayList(Arrays.asList(data.data.get(result.get(i).index).value));
+            dataTable.getItems().add(row);
+        }
+    } @FXML
+    protected void heapSort() {
+//        dataTable.getColumns().clear();
+        dataTable.getItems().clear();
+        ArrayList<DataSet.SingleDataFormat> result = data.heapSort(column);
+
+        for(int i = 0; i < result.size(); i++){
+//            System.out.println(data.data.get(result.get(i).index).value[column]);
+            ObservableList<String> row = FXCollections.observableArrayList(Arrays.asList(data.data.get(result.get(i).index).value));
+            dataTable.getItems().add(row);
+        }
+    }
     @FXML
     protected void handleFileSelection() {
         toggleGroup = new ToggleGroup();
@@ -57,16 +105,22 @@ public class HelloController {
                     dataTable.getColumns().add(column);
                 }
                 boolean firstLine = true;
+                int x=0;
                 while ((line = br.readLine()) != null) {
-                    System.out.println(line);
-                    System.out.println("hello");
                     String[] rowValues = line.split(",");
+                    data.data.add(new Data(x, rowValues));
+                    x++;
 
                     if(firstLine){
                         for(int i = 0; i < rowValues.length; i++){
                             try{
                                 Double.parseDouble(rowValues[i]);
                                 RadioButton radBtn = new RadioButton(headers[i]);
+                                int finalI = i;
+                                radBtn.setOnAction(event -> {
+                                    column= finalI;
+                                    System.out.println(column);
+                                });
                                 radBtn.setToggleGroup(toggleGroup);
                                 colNameContainer.getChildren().add(radBtn);
                             }catch(NumberFormatException e){
@@ -81,5 +135,6 @@ public class HelloController {
                 e.printStackTrace();
             }
         }
+
     }
 }

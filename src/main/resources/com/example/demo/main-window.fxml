@@ -9,7 +9,11 @@
         <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
     </padding>
    <Button mnemonicParsing="false" onAction="#handleFileSelection" text="open file" />
-   <FlowPane prefHeight="200.0" prefWidth="200.0" fx:id="colNameContainer" />
+   <Button mnemonicParsing="false" onAction="#shellSort" text="Shell sort" />
+   <Button mnemonicParsing="false" onAction="#mergeSort" text="merge sort" />
+   <Button mnemonicParsing="false" onAction="#quickSort" text="quick sort" />
+   <Button mnemonicParsing="false" onAction="#heapSort" text="heap sort" />
+   <FlowPane fx:id="colNameContainer" prefHeight="200.0" prefWidth="200.0" />
 
     <Label fx:id="welcomeText" />
    <HBox prefHeight="336.0" prefWidth="594.0">

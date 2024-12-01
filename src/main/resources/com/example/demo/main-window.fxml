@@ -41,13 +41,13 @@
       <children>
          <HBox prefHeight="100.0" prefWidth="200.0">
             <children>
-               <TextArea fx:id="resultView" disable="true" prefHeight="54.0" prefWidth="754.0">
+               <TextArea fx:id="resultView" disable="true" prefHeight="103.0" prefWidth="738.0">
                   <cursor>
                      <Cursor fx:constant="DEFAULT" />
                   </cursor>
                </TextArea>
             </children></HBox>
-         <TableView fx:id="dataTable" prefHeight="406.0" prefWidth="738.0">
+         <TableView fx:id="dataTable" prefHeight="380.0" prefWidth="738.0">
             <cursor>
                <Cursor fx:constant="DEFAULT" />
             </cursor>

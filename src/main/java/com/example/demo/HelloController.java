@@ -85,7 +85,13 @@ public class HelloController {
             start = System.nanoTime();
             ArrayList<DataSet.SingleDataFormat> resultQuick = data.quickSort(column);
             double quickTime = (System.nanoTime() - start) / 1e6;
-            message += "Quick sort: " + String.format("%.2f", quickTime) + " ms";
+            message += "Quick sort: " + String.format("%.2f", quickTime) + " ms\n";
+            progressBar.setProgress(0.90);
+
+            start = System.nanoTime();
+            ArrayList<DataSet.SingleDataFormat> resultInsertion = data.quickSort(column);
+            double insertionTime = (System.nanoTime() - start) / 1e6;
+            message += "Insertion sort: " + String.format("%.2f", insertionTime) + " ms";
             progressBar.setProgress(1.00);
 
             resultView.setText(message);

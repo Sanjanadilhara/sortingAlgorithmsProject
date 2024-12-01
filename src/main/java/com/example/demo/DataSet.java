@@ -139,4 +139,21 @@ private void heapify(ArrayList<SingleDataFormat> list, int n, int i) {
         heapify(list, n, largest);
     }
 }
+
+public ArrayList<SingleDataFormat> insertionSort(int col) {
+    ArrayList<SingleDataFormat> temDataSet = new ArrayList<>();
+    for (Data d : data) {
+        temDataSet.add(new SingleDataFormat(d.index, d.value[col]));
+    }
+    for (int i = 1; i < temDataSet.size(); i++) {
+        SingleDataFormat key = temDataSet.get(i);
+        int j = i - 1;
+        while (j >= 0 && temDataSet.get(j).value > key.value) {
+            temDataSet.set(j + 1, temDataSet.get(j));
+            j--;
+        }
+        temDataSet.set(j + 1, key);
+    }
+    return temDataSet;
+}
 }

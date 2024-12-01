@@ -4,91 +4,117 @@ import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
-import javafx.scene.control.Label;
-import javafx.scene.control.RadioButton;
-import javafx.scene.control.TableView;
-import javafx.scene.control.ToggleGroup;
+import javafx.scene.control.*;
 import javafx.scene.layout.FlowPane;
-import javafx.scene.layout.HBox;
 import javafx.stage.FileChooser;
 
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.AbstractMap;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Map;
 
 public class HelloController {
-    int column;
     ToggleGroup toggleGroup;
     DataSet data = new DataSet();
+
     @FXML
-    private Label welcomeText;
+    private ChoiceBox<Map.Entry<String, Integer>> colSelect;
+
+    @FXML
+    private TextField pathString;
+
+    @FXML
+    private ProgressBar progressBar;
+
+    @FXML
+    private TextArea resultView;
 
     @FXML
     private TableView<ObservableList<String>> dataTable;
 
-    @FXML
-    private FlowPane colNameContainer;
+
 
     @FXML
-    protected void onHelloButtonClick() {
-        welcomeText.setText("Welcome to JavaFX Application!");
+    public void initialize() {
+        colSelect.setConverter(new javafx.util.StringConverter<>() {
+            @Override
+            public String toString(Map.Entry<String, Integer> object) {
+                return object==null ? "" : object.getKey();
+            }
+
+            @Override
+            public Map.Entry<String, Integer> fromString(String s) {
+                return null;
+            }
+        });
+        progressBar.setVisible(false);
+    }
+    @FXML
+    protected void startSort() {
+        int column=colSelect.getValue().getValue();
+        progressBar.setVisible(true);
+        System.out.println(colSelect.getValue().getValue());
+//        dataTable.getColumns().clear();
+        dataTable.getItems().clear();
+
+        Thread thread = new Thread(() -> {
+            String message = "";
+            long start = System.nanoTime();
+            ArrayList<DataSet.SingleDataFormat> resultShell = data.shellSort(column);
+            double shellTime = (System.nanoTime() - start) / 1e6;
+            message += "Shell sort: " + String.format("%.2f", shellTime) + " ms\n";
+            progressBar.setProgress(0.25);
+
+
+            start = System.nanoTime();
+            ArrayList<DataSet.SingleDataFormat> resultMerge = data.mergeSort(column);
+            double mergeTime = (System.nanoTime() - start) / 1e6;
+            message += "Merge sort: " + String.format("%.2f", mergeTime) + " ms\n";
+            progressBar.setProgress(0.5);
+
+            start = System.nanoTime();
+            ArrayList<DataSet.SingleDataFormat> resultHeap = data.heapSort(column);
+            double heapTime = (System.nanoTime() - start) / 1e6;
+            message += "Heap sort: " + String.format("%.2f", heapTime) + " ms\n";
+            progressBar.setProgress(0.75);
+
+            start = System.nanoTime();
+            ArrayList<DataSet.SingleDataFormat> resultQuick = data.quickSort(column);
+            double quickTime = (System.nanoTime() - start) / 1e6;
+            message += "Quick sort: " + String.format("%.2f", quickTime) + " ms";
+            progressBar.setProgress(1.00);
+
+            resultView.setText(message);
+
+            for (int i = 0; i < resultShell.size(); i++) {
+                ObservableList<String> row = FXCollections.observableArrayList(Arrays.asList(data.data.get(resultShell.get(i).index).value));
+                dataTable.getItems().add(row);
+            }
+
+            progressBar.setVisible(false);
+            progressBar.setProgress(0.0);
+        });
+        thread.start();
     }
 
-    @FXML
-    protected void shellSort() {
-//        dataTable.getColumns().clear();
-        dataTable.getItems().clear();
-        ArrayList<DataSet.SingleDataFormat> result = data.shellSort(column);
-
-        for(int i = 0; i < result.size(); i++){
-//            System.out.println(data.data.get(result.get(i).index).value[column]);
-            ObservableList<String> row = FXCollections.observableArrayList(Arrays.asList(data.data.get(result.get(i).index).value));
-            dataTable.getItems().add(row);
-        }
-    } @FXML
-    protected void mergeSort() {
-//        dataTable.getColumns().clear();
-        dataTable.getItems().clear();
-        ArrayList<DataSet.SingleDataFormat> result = data.mergeSort(column);
-
-        for(int i = 0; i < result.size(); i++){
-//            System.out.println(data.data.get(result.get(i).index).value[column]);
-            ObservableList<String> row = FXCollections.observableArrayList(Arrays.asList(data.data.get(result.get(i).index).value));
-            dataTable.getItems().add(row);
-        }
-    } @FXML
-    protected void quickSort() {
-//        dataTable.getColumns().clear();
-        dataTable.getItems().clear();
-        ArrayList<DataSet.SingleDataFormat> result = data.quickSort(column);
-
-        for(int i = 0; i < result.size(); i++){
-//            System.out.println(data.data.get(result.get(i).index).value[column]);
-            ObservableList<String> row = FXCollections.observableArrayList(Arrays.asList(data.data.get(result.get(i).index).value));
-            dataTable.getItems().add(row);
-        }
-    } @FXML
-    protected void heapSort() {
-//        dataTable.getColumns().clear();
-        dataTable.getItems().clear();
-        ArrayList<DataSet.SingleDataFormat> result = data.heapSort(column);
-
-        for(int i = 0; i < result.size(); i++){
-//            System.out.println(data.data.get(result.get(i).index).value[column]);
-            ObservableList<String> row = FXCollections.observableArrayList(Arrays.asList(data.data.get(result.get(i).index).value));
-            dataTable.getItems().add(row);
-        }
-    }
     @FXML
     protected void handleFileSelection() {
-        toggleGroup = new ToggleGroup();
+        data=new DataSet();
+        colSelect.getItems().clear();
+        dataTable.getColumns().clear();
+        dataTable.getItems().clear();
+
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("Open CSV File");
-        File selectedFile = fileChooser.showOpenDialog(welcomeText.getScene().getWindow());
+        File selectedFile = fileChooser.showOpenDialog(colSelect.getScene().getWindow());
+
         if (selectedFile != null) {
+            pathString.setText(selectedFile.getAbsolutePath());
+            pathString.setDisable(true);
             try (BufferedReader br = new BufferedReader(new FileReader(selectedFile))) {
                 String line;
                 String headersLine = br.readLine();
@@ -115,14 +141,9 @@ public class HelloController {
                         for(int i = 0; i < rowValues.length; i++){
                             try{
                                 Double.parseDouble(rowValues[i]);
-                                RadioButton radBtn = new RadioButton(headers[i]);
                                 int finalI = i;
-                                radBtn.setOnAction(event -> {
-                                    column= finalI;
-                                    System.out.println(column);
-                                });
-                                radBtn.setToggleGroup(toggleGroup);
-                                colNameContainer.getChildren().add(radBtn);
+                                colSelect.getItems().add(new AbstractMap.SimpleEntry<>(headers[finalI], finalI));
+                                colSelect.setValue(new AbstractMap.SimpleEntry<>(headers[finalI], finalI));
                             }catch(NumberFormatException e){
                             }
                         }

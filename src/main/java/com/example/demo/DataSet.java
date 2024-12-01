@@ -6,9 +6,13 @@ public class DataSet {
     public static class SingleDataFormat{
         public int index;
         public double value;
-        public SingleDataFormat(int index, double value){
+        public SingleDataFormat(int index, String value){
             this.index = index;
-            this.value = value;
+            try{
+                this.value = Double.parseDouble(value);
+            }catch (Exception e){
+                this.value=0.0;
+            }
         }
     }
     public ArrayList<Data> data;
@@ -18,7 +22,7 @@ public class DataSet {
     public ArrayList<SingleDataFormat> shellSort(int col){
         ArrayList<SingleDataFormat> temDataSet = new ArrayList<SingleDataFormat>();
         for(int i = 0; i < data.size(); i++){
-            temDataSet.add(new SingleDataFormat(data.get(i).index, Double.parseDouble(data.get(i).value[col])));
+            temDataSet.add(new SingleDataFormat(data.get(i).index, data.get(i).value[col]));
         }
         int gap = temDataSet.size() / 2;
         while(gap > 0){
@@ -38,7 +42,7 @@ public class DataSet {
 public ArrayList<SingleDataFormat> mergeSort(int col) {
     ArrayList<SingleDataFormat> temDataSet = new ArrayList<>();
     for (Data d : data) {
-        temDataSet.add(new SingleDataFormat(d.index, Double.parseDouble(d.value[col])));
+        temDataSet.add(new SingleDataFormat(d.index, d.value[col]));
     }
     return mergeSortHelper(temDataSet);
 }
@@ -69,7 +73,7 @@ private ArrayList<SingleDataFormat> merge(ArrayList<SingleDataFormat> left, Arra
 public ArrayList<SingleDataFormat> quickSort(int col) {
     ArrayList<SingleDataFormat> temDataSet = new ArrayList<>();
     for (Data d : data) {
-        temDataSet.add(new SingleDataFormat(d.index, Double.parseDouble(d.value[col])));
+        temDataSet.add(new SingleDataFormat(d.index, d.value[col]));
     }
     quickSortHelper(temDataSet, 0, temDataSet.size() - 1);
     return temDataSet;
@@ -103,7 +107,7 @@ private int partition(ArrayList<SingleDataFormat> list, int low, int high) {
 public ArrayList<SingleDataFormat> heapSort(int col) {
     ArrayList<SingleDataFormat> temDataSet = new ArrayList<>();
     for (Data d : data) {
-        temDataSet.add(new SingleDataFormat(d.index, Double.parseDouble(d.value[col])));
+        temDataSet.add(new SingleDataFormat(d.index, d.value[col]));
     }
     int n = temDataSet.size();
     for (int i = n / 2 - 1; i >= 0; i--) {

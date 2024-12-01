@@ -1,25 +1,57 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.geometry.*?>
+<?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<VBox alignment="CENTER" prefHeight="418.0" prefWidth="634.0" spacing="20.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.demo.HelloController">
+<VBox alignment="TOP_CENTER" prefHeight="627.0" prefWidth="777.0" spacing="20.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.demo.HelloController">
     <padding>
         <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
     </padding>
-   <Button mnemonicParsing="false" onAction="#handleFileSelection" text="open file" />
-   <Button mnemonicParsing="false" onAction="#shellSort" text="Shell sort" />
-   <Button mnemonicParsing="false" onAction="#mergeSort" text="merge sort" />
-   <Button mnemonicParsing="false" onAction="#quickSort" text="quick sort" />
-   <Button mnemonicParsing="false" onAction="#heapSort" text="heap sort" />
-   <FlowPane fx:id="colNameContainer" prefHeight="200.0" prefWidth="200.0" />
-
-    <Label fx:id="welcomeText" />
-   <HBox prefHeight="336.0" prefWidth="594.0">
+   <HBox>
       <children>
-         <TableView fx:id="dataTable" prefHeight="100.0" prefWidth="683.0">
-         </TableView>
+         <TextField fx:id="pathString" prefHeight="26.0" prefWidth="660.0">
+            <HBox.margin>
+               <Insets right="10.0" />
+            </HBox.margin>
+         </TextField>
+         <Button mnemonicParsing="false" onAction="#handleFileSelection" prefHeight="26.0" prefWidth="78.0" text="open file" />
       </children>
    </HBox>
+   <HBox alignment="BOTTOM_LEFT" prefHeight="26.0" prefWidth="738.0">
+      <VBox prefHeight="26.0" prefWidth="238.0">
+         <children>
+            <Label prefHeight="18.0" prefWidth="227.0" text="Select a column to sort" />
+             <ChoiceBox fx:id="colSelect" prefHeight="26.0" prefWidth="254.0">
+               <VBox.margin>
+                  <Insets right="10.0" />
+               </VBox.margin>
+             </ChoiceBox>
+         </children>
+      </VBox>
+      <Button mnemonicParsing="false" onAction="#startSort" prefHeight="26.0" prefWidth="67.0" text="Start">
+         <HBox.margin>
+            <Insets right="10.0" />
+         </HBox.margin>
+      </Button>
+      <ProgressBar fx:id="progressBar" prefHeight="18.0" prefWidth="423.0" progress="0.0" />
+   </HBox>
+   <VBox prefHeight="506.0" prefWidth="738.0">
+      <children>
+         <HBox prefHeight="100.0" prefWidth="200.0">
+            <children>
+               <TextArea fx:id="resultView" disable="true" prefHeight="54.0" prefWidth="754.0">
+                  <cursor>
+                     <Cursor fx:constant="DEFAULT" />
+                  </cursor>
+               </TextArea>
+            </children></HBox>
+         <TableView fx:id="dataTable" prefHeight="406.0" prefWidth="738.0">
+            <cursor>
+               <Cursor fx:constant="DEFAULT" />
+            </cursor>
+         </TableView>
+      </children>
+   </VBox>
 </VBox>

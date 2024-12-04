@@ -5,49 +5,49 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<VBox alignment="TOP_CENTER" prefHeight="627.0" prefWidth="777.0" spacing="20.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.demo.HelloController">
+<VBox alignment="TOP_CENTER" prefHeight="627.0" prefWidth="777.0" spacing="20.0" style="-fx-background-color: #FFF;" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.demo.HelloController">
     <padding>
         <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
     </padding>
    <HBox>
       <children>
-         <TextField fx:id="pathString" prefHeight="26.0" prefWidth="660.0">
+         <TextField fx:id="pathString" prefHeight="26.0" prefWidth="660.0" style="-fx-background-color: #edf5ff; -fx-border-color: #daeaff;">
             <HBox.margin>
                <Insets right="10.0" />
             </HBox.margin>
          </TextField>
-         <Button mnemonicParsing="false" onAction="#handleFileSelection" prefHeight="26.0" prefWidth="78.0" text="open file" />
+         <Button mnemonicParsing="false" onAction="#handleFileSelection" prefHeight="26.0" prefWidth="78.0" style="-fx-border-radius: 0; -fx-background-color: #edf5ff; -fx-border-color: #daeaff;" text="open file" />
       </children>
    </HBox>
    <HBox alignment="BOTTOM_LEFT" prefHeight="26.0" prefWidth="738.0">
       <VBox prefHeight="26.0" prefWidth="238.0">
          <children>
             <Label prefHeight="18.0" prefWidth="227.0" text="Select a column to sort" />
-             <ChoiceBox fx:id="colSelect" prefHeight="26.0" prefWidth="254.0">
+             <ChoiceBox fx:id="colSelect" prefHeight="26.0" prefWidth="254.0" style="-fx-border-color: #ffff; -fx-background-color: #edf5ff; -fx-border-color: #daeaff;">
                <VBox.margin>
                   <Insets right="10.0" />
                </VBox.margin>
              </ChoiceBox>
          </children>
       </VBox>
-      <Button mnemonicParsing="false" onAction="#startSort" prefHeight="26.0" prefWidth="67.0" text="Start">
+      <Button mnemonicParsing="false" onAction="#startSort" prefHeight="26.0" prefWidth="67.0" style="-fx-background-color: #edf5ff; -fx-border-color: #daeaff;" text="Start">
          <HBox.margin>
             <Insets right="10.0" />
          </HBox.margin>
       </Button>
-      <ProgressBar fx:id="progressBar" prefHeight="18.0" prefWidth="423.0" progress="0.0" />
+      <ProgressBar fx:id="progressBar" prefHeight="18.0" prefWidth="423.0" progress="0.0" style="-fx-background-color: #FFFFFF;" />
    </HBox>
    <VBox prefHeight="506.0" prefWidth="738.0">
       <children>
          <HBox prefHeight="100.0" prefWidth="200.0">
             <children>
-               <TextArea fx:id="resultView" disable="true" prefHeight="103.0" prefWidth="738.0">
+               <TextArea fx:id="resultView" editable="false" prefHeight="103.0" prefWidth="738.0">
                   <cursor>
                      <Cursor fx:constant="DEFAULT" />
                   </cursor>
                </TextArea>
             </children></HBox>
-         <TableView fx:id="dataTable" prefHeight="380.0" prefWidth="738.0">
+         <TableView fx:id="dataTable" prefHeight="380.0" prefWidth="738.0" style="-fx-background-color: #edf5ff; -fx-border-color: #daeaff;">
             <cursor>
                <Cursor fx:constant="DEFAULT" />
             </cursor>
